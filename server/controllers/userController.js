@@ -91,27 +91,39 @@ const create = (req, res, next) => {
    }) 
   };
   const removeTask=(req,res)=>{
-    console.log("Inside remove task");
-    const userId={_id:"5ec2e2c567ea2c3b0466640e"};
-    const taskId='5ec4d252cf84e14084ab395f';
+    const taskName=req.body.taskName;
     User.updateOne(
       {_id:req.profile._id},
-      { $pull: { task: {_id:taskId} } }).exec(
+      { $pull: { task: {taskName:taskName} } }).exec(
       (err, result) => {
         if (err) {
-          console.log(err);
-          console.log("Inside call back");
           return res.status(400).json({
             error: errorHandler.getErrorMessage(err)
           });
         }
+        console.log(result);
         result.hashed_password = undefined;
         result.salt = undefined;
         res.json(result);
         
       }
     );
-   console.log(user);
+  }
+
+  const listByLabel=(req,res)=>{
+    console.log(req.body.taskName);
+    console.log(req.body.labels);
+    console.log(req.profile.task.taskName)
+    User.findOne({'task.taskName':"sleep",_id:req.profile._id,}).exec((err, tasks) => {
+      if (err) {
+        console.log(err)
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        })
+      }
+      console.log(tasks);
+      res.json(tasks)
+    })
   }
 
   module.exports = {
@@ -122,6 +134,7 @@ const create = (req, res, next) => {
     remove,
     update,
     addTask,
-    removeTask
+    removeTask,
+    listByLabel
   };
   

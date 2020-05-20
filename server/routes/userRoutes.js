@@ -16,6 +16,8 @@ router.route('/api/users/addTask/:userId')
 router.route('/api/users/removeTask/:userId')
   .put(userCtrl.removeTask) 
   
+router.route('/api/users/task/listByLabel/:userId')
+  .get(userCtrl.listByLabel)
   
 router.route('/api/users/:userId')
   .get(userCtrl.read)
