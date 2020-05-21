@@ -31,7 +31,7 @@ const TaskSchema = new mongoose.Schema({
   dueDate:{
       type: Date,
   },
-  //shop: {type: mongoose.Schema.ObjectId, ref: 'Shop'}
+  user: {type: mongoose.Schema.ObjectId, ref: 'User'}
 })
 
 //const Task=mongoose.model('Task', TaskSchema);

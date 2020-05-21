@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: "Password is required"
   },
-  task:[TaskSchema],
+  //task:[{type: mongoose.Schema.ObjectId, ref: 'Task'}],
   salt: String,
   updated: Date,
   created: {
