@@ -1,6 +1,7 @@
 const express =require('express');
 const userCtrl =require('../controllers/userController');
-//const authCtrl =require('../controllers/authController');
+const taskCtrl=require('../controllers/taskController');
+const authCtrl =require('../controllers/authController');
 const router = express.Router()
 
 router.route('/api/users')
@@ -8,21 +9,11 @@ router.route('/api/users')
   .post(userCtrl.create)
 
 
-router.route('/api/users/addTask/:userId')
-  .put(userCtrl.addTask)
-    
-
-
-router.route('/api/users/removeTask/:userId')
-  .put(userCtrl.removeTask) 
-  
-router.route('/api/users/task/listByLabel/:userId')
-  .get(userCtrl.listByLabel)
   
 router.route('/api/users/:userId')
-  .get(userCtrl.read)
-  .put(userCtrl.update)
-  .delete(userCtrl.remove)
+  .get(authCtrl.requireSignin,userCtrl.read)
+  .put(authCtrl.requireSignin,userCtrl.update)
+  .delete(authCtrl.requireSignin,userCtrl.remove)
 
 router.param('userId', userCtrl.userByID)
 

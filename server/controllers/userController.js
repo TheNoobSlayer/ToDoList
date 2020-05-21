@@ -75,56 +75,10 @@ const create = (req, res, next) => {
     })
   }  
 
-  const addTask = (req, res) => {
-    const task1=new Task(req.body);
-    req.profile.task.push(task1);
-    const user=req.profile;
-    user.save((err, result) => {
-      if (err) {
-        return res.status(400).json({
-          error: errorHandler.getErrorMessage(err)
-        })
-      }
-      user.hashed_password = undefined
-      user.salt = undefined
-      res.json(user)
-   }) 
-  };
-  const removeTask=(req,res)=>{
-    const taskName=req.body.taskName;
-    User.updateOne(
-      {_id:req.profile._id},
-      { $pull: { task: {taskName:taskName} } }).exec(
-      (err, result) => {
-        if (err) {
-          return res.status(400).json({
-            error: errorHandler.getErrorMessage(err)
-          });
-        }
-        console.log(result);
-        result.hashed_password = undefined;
-        result.salt = undefined;
-        res.json(result);
-        
-      }
-    );
-  }
+  
+  
 
-  const listByLabel=(req,res)=>{
-    console.log(req.body.taskName);
-    console.log(req.body.labels);
-    console.log(req.profile.task.taskName)
-    User.findOne({'task.taskName':"sleep",_id:req.profile._id,}).exec((err, tasks) => {
-      if (err) {
-        console.log(err)
-        return res.status(400).json({
-          error: errorHandler.getErrorMessage(err)
-        })
-      }
-      console.log(tasks);
-      res.json(tasks)
-    })
-  }
+  
 
   module.exports = {
     create,
@@ -132,9 +86,6 @@ const create = (req, res, next) => {
     read,
     list,
     remove,
-    update,
-    addTask,
-    removeTask,
-    listByLabel
+    update
   };
   
