@@ -3,6 +3,8 @@ import {Route,Switch} from 'react-router-dom';
 import Menu from './core/Menu';
 import Signup from './user/SignUp';
 import Signin from './auth/Signin';
+import Footer from './core/Footer'
+
 
 
 
@@ -16,7 +18,7 @@ function MainRouter() {
 
 
         </Switch>
-        
+        <Footer/>
      </div>
   
     );
