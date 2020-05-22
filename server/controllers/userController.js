@@ -75,6 +75,94 @@ const create = (req, res, next) => {
     })
   }  
 
+  const decreaseCoins = (req, res, next) => {
+    console.log(req.profile);
+    console.log(req.reward);
+    let decreaseBy=0;
+    if(req.reward.labels==='Comfort'){
+        decreaseBy=25;
+    }
+    else if(req.reward.labels==='Rest'){
+        decreaseBy=20;
+    }
+    else if(req.reward.labels==='Entertainment'){
+        decreaseBy=30;
+    }
+    else if(req.reward.labels==='Eat a treat'){
+        decreaseBy=30;
+    }
+    else if(req.reward.labels==='Play'){
+        decreaseBy=35;
+    }
+    else if(req.reward.labels==='Skip a Daily'){
+        decreaseBy=35;
+    }
+    else if(req.reward.labels==='Time'){
+        decreaseBy=35;
+    }
+    else if(req.reward.labels==='Others'){
+        decreaseBy=35;
+    }    
+    User.findByIdAndUpdate(req.profile._id, {$inc: {"coins": -decreaseBy}})
+    .exec((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: errorHandler.getErrorMessage(err)
+        })
+      }
+      next()
+    })
+  }
+
+  const increaseCoins=(req,res,next)=>{
+    console.log(req.profile);
+    console.log(req.task);
+    if(req.task.difficulty==='Trivial'){
+      User.findByIdAndUpdate(req.profile._id, {$inc: {"coins": 2}})
+      .exec((err, result) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+          })
+        }
+        next()
+      })
+    }
+    else if(req.task.difficulty==='Easy'){
+      User.findByIdAndUpdate(req.profile._id, {$inc: {"coins": 5}})
+      .exec((err, result) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+          })
+        }
+        next()
+      })
+    }
+    else if(req.task.difficulty==='Medium'){
+      User.findByIdAndUpdate(req.profile._id, {$inc: {"coins": 7}})
+      .exec((err, result) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+          })
+        }
+        next()
+      })
+    }
+    else if(req.task.difficulty==='Hard'){
+      User.findByIdAndUpdate(req.profile._id, {$inc: {"coins": 10}})
+      .exec((err, result) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler.getErrorMessage(err)
+          })
+        }
+        next()
+      })
+    } 
+  }
+
   
   
 
@@ -86,6 +174,8 @@ const create = (req, res, next) => {
     read,
     list,
     remove,
-    update
+    update,
+    increaseCoins,
+    decreaseCoins
   };
   

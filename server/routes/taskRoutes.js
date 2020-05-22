@@ -23,7 +23,7 @@ router.route('/api/tasks/by/status/:userId/')
 router.route('/api/tasks/:userId/:taskId')
   .get(authCtrl.requireSignin,taskCtrl.read)
   .put(authCtrl.requireSignin,taskCtrl.update)
-  .delete(authCtrl.requireSignin,taskCtrl.remove)
+  .delete(authCtrl.requireSignin,userCtrl.increaseCoins,taskCtrl.remove)
 
 router.param('taskId', taskCtrl.taskByID)
 router.param('userId', userCtrl.userByID)
