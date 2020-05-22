@@ -1,7 +1,6 @@
 const mongoose =require('mongoose');
-console.log("Bo inside taskModel");
-const TaskSchema = new mongoose.Schema({
-  taskName: {
+const DailySchema = new mongoose.Schema({
+  dailyName: {
     type: String,
     trim: true,
     required: 'Task name is required'
@@ -29,12 +28,7 @@ const TaskSchema = new mongoose.Schema({
     default: Date.now
   },
   dueDate:{
-    type: Date,
-  },
-  difficulty:{
-    type: String,
-    default:'Easy',
-    enum: ['Trivial','Easy','Medium','Hard']
+      type: Date,
   },
   user: {type: mongoose.Schema.ObjectId, ref: 'User'}
 })
@@ -42,4 +36,4 @@ const TaskSchema = new mongoose.Schema({
 //const Task=mongoose.model('Task', TaskSchema);
 //module.exports=Task;
 //module.exports=TaskSchema;
-module.exports=mongoose.model('Task', TaskSchema);
+module.exports=mongoose.model('Daily', DailySchema);

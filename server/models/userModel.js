@@ -26,7 +26,22 @@ const UserSchema = new mongoose.Schema({
   created: {
     type: Date,
     default: Date.now
+  },
+  coins:{
+    type:Number,
+    default:0
+  },
+  health:{
+    type:Number,
+    default:50
+  },
+  experience:{
+    type:Number,
+    default:0
   }
+  
+
+  
 })
 
 UserSchema

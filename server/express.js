@@ -10,6 +10,9 @@ const helmet = require("helmet");
 const userRoutes=require('./routes/userRoutes');
 const taskRoutes=require('./routes/taskRoutes');
 const authRoutes=require('./routes/authRoutes');
+const dailyRoutes=require('./routes/dailyRoutes');
+const rewardRoutes=require('./routes/rewardRoutes');
+
 const app = express();
 
 // parse body params and attache them to req.body
@@ -26,6 +29,8 @@ app.use(cors());
 app.use('/',userRoutes);
 app.use('/',taskRoutes);
 app.use('/',authRoutes);
+app.use('/',dailyRoutes);
+app.use('/',rewardRoutes);
 // Catch unauthorised errors
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
