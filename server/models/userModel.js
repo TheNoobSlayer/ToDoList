@@ -4,7 +4,12 @@ const crypto =require('crypto');
 //const Task=mongoose.model('Task', TaskSchema);
 mongoose.set('useFindAndModify', false);
 const UserSchema = new mongoose.Schema({
-  name: {
+  firstname: {
+    type: String,
+    trim: true,
+    required: 'Name is required'
+  },
+  lastname: {
     type: String,
     trim: true,
     required: 'Name is required'

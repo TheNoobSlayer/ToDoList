@@ -79,8 +79,8 @@ const useStyles = makeStyles(theme => ({
       { 
         auth.isAuthenticated() && (<span>
          
-          <Link to={"/cofounder/" + auth.isAuthenticated().user._id}>
-            <Button style={isActive(history, "/cofounder/" + auth.isAuthenticated().user._id)}>My Profile</Button>
+          <Link to={"/user/" + auth.isAuthenticated().user._id}>
+            <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
           </Link>
           <Button color="inherit" onClick={() => {
               auth.signout(() => history.push('/'))

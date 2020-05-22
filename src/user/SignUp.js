@@ -82,22 +82,15 @@ export default function SignUp() {
     setPassword('');
 
 	
-    // create(user).then((data) => {
-    //   if (data.error) {
-    //     setError(data.error)
-    //   } else {
-    //     setError('')
-    //     setOpen(true)
-    //   }
-    // });
-    history.push({pathname:'/onboarding',
-        state:{
-          firstname: firstname || undefined,
-	  lastname: lastname || undefined,
-      email: email || undefined,
-      password: password || undefined
-        }
-    });
+     create(user).then((data) => {
+       if (data.error) {
+         setError(data.error)
+       } else {
+         setError('')
+         setOpen(true)
+       }
+     });
+    
   }
 
   return (
