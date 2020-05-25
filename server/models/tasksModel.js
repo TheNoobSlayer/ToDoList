@@ -12,7 +12,7 @@ const TaskSchema = new mongoose.Schema({
   },
   labels: {
     type: String,
-    enum: ['Work','School','Personal','Exercise','Health & Fitness','Chores','Creativity','Self Development']
+    enum: ['Work','School','Personal','Exercise','Health & Fitness','Chores','Creativity','Self Development','Others']
   },
   priority: {type: String,
     default: 'Medium',

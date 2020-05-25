@@ -174,7 +174,7 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             color="primary"
-			 onClick={handleSubmit}
+			      onClick={handleSubmit}
             className={classes.submit}
           >
             Sign Up
