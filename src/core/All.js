@@ -1,17 +1,12 @@
 import React,{useState ,useEffect} from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList } from 'react-window';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import Paper from '@material-ui/core/Paper';
 import {taskByUser} from '../task/api-task';
-import auth from './../auth/auth-user-helper'
+import auth from './../auth/auth-user-helper';
+import NewTask from '../task/NewTask';
 
 
 
@@ -36,7 +31,6 @@ function renderRow(props) {
     </ListItem>
   );
 }
-
 
 
 export default function VirtualizedList() {
@@ -65,7 +59,8 @@ export default function VirtualizedList() {
     loadTasks();
    }, []);
  
-
+  
+   
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   }
@@ -73,10 +68,11 @@ export default function VirtualizedList() {
   return (
      
         
-     <Grid container className={classes.root} spacing={2}>
+    <Grid container className={classes.root} spacing={2}>
         <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
             {renderRow}
         </FixedSizeList>
+        <NewTask/>
       
     </Grid>
         
