@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MyTasks from '../task/MyTasks';
 import { FixedSizeList } from 'react-window';
 import All from './All';
+import Grid from '@material-ui/core/Grid';
 
 
 const drawerWidth = 240;
@@ -38,12 +39,33 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(0),
+    //marginLeft: drawerWidth,
+    marginTop:85,
+  },
+  content2: {
+    //marginLeft:0,
+    // position:'relative',
+    // margin: theme.spacing(0),
+    flexgrow : 1,
+    padding: theme.spacing(0),
+    marginRight:520,
+    //position: 'relative',
+   // marginLeft: drawerWidth+300,
+    //marginRight: 0,
+  },
+  content3: {
+    marginLeft:-500,
+  },
+  paper: {
+    height: 140,
+    width: 100,
   },
 }));
 
 export default function ClippedDrawer() {
   const classes = useStyles();
+  const [spacing, setspacing] = useState(2)
 
   return (
     <div className={classes.root}>
@@ -77,12 +99,34 @@ export default function ClippedDrawer() {
           </List>
         </div>
       </Drawer>
-      <main className={classes.content}>
+      {/* <main className={classes.content}>
       
         <All/>
         
         
       </main>
+      <main className={classes.content2}>
+      
+        <All/>
+        
+        
+      </main>
+      <main className={classes.content3}>
+      
+        <All/>
+      
+      
+      </main> */}
+
+      <Grid className={classes.content} item xs={12}>
+        <Grid container spacing={spacing}>
+          {[0, 1, 2,3].map((value) => (
+            <Grid key={value} item>
+              <All className={classes.paper} />
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
     </div>
   );
 }

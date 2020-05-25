@@ -19,12 +19,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: 400,
-    maxWidth: 300,
+    maxWidth: 270,
     backgroundColor: theme.palette.background.paper,
     flexGrow:1
   },
   control: {
     padding: theme.spacing(2),
+  },
+  item:{
+    margin:theme.spacing(3),
   }
 }));
 
@@ -44,6 +47,8 @@ export default function VirtualizedList() {
   const classes = useStyles();
   const [spacing, setSpacing] = React.useState(2);
   const [tasks, setTasks] = useState([]);
+  let check; 
+  
   const loadTasks = () => {
     taskByUser({
       userId: '5ec63cc670c16f5bc010cce0'
@@ -55,8 +60,14 @@ export default function VirtualizedList() {
         //this.setState({error: data.error})
       } else {
         //console.log("Bochya inside loadSkills")
-        console.log(data)
-        setTasks(data)
+        // const {check} = props;
+        check = JSON.parse(JSON.stringify(data));
+        // console.log(data)
+        // setTasks(JSON.parse(JSON.stringify(data)));
+        setTasks(data);
+        console.log("hi")
+        //  console.log(check);
+        //  console.log(check);
       }
     })
   }
@@ -74,9 +85,17 @@ export default function VirtualizedList() {
      
         
      <Grid container className={classes.root} spacing={2}>
-        <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
+        {/* <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
             {renderRow}
-        </FixedSizeList>
+            {/* {tasks.map((task,index) =>( 
+                <p>{task.priority}</p>
+            ))}  */}
+        {/* </FixedSizeList> */} */}
+        <Grid>
+         {console.log(check)}
+         
+         {check}
+         </Grid>
       
     </Grid>
         
