@@ -5,6 +5,7 @@ const Task=require("../models/tasksModel");
 const TaskSchema=require("../models/tasksModel");
 
 const create = (req, res, next) => {
+  console.log("Inside Task Controller.create");
     const task = new Task(req.body)
     task.save((err, result) => {
       if (err) {

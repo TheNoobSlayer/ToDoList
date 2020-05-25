@@ -1,15 +1,17 @@
 import queryString from 'query-string'
 const create = (params, credentials, task) => {
-  return fetch('/api/tasks/by/'+ params.userId, {
+  console.log("Inside api-task create")
+  return fetch('http://localhost:5000/api/tasks/by/'+ params.userId, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + credentials.t
       },
-      body: task
+      body: JSON.stringify(task)
     })
     .then((response) => {
+      console.log(response);
       return response.json()
     }).catch((err) => console.log(err))
 }
@@ -69,7 +71,7 @@ const taskByUser = (params,credentials) => {
         'Authorization': 'Bearer ' + credentials.t
       }
   }).then((response) => {
-    console.log(response)
+    //console.log(response)
     return response.json()
   }).catch((err) => {
     console.log(err)
