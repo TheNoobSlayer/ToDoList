@@ -7,7 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import {taskByUser} from '../task/api-task';
 import auth from './../auth/auth-user-helper';
 import NewTask from '../task/NewTask';
-
+import EditTask from '../task/EditTask';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,11 +31,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function renderRow(props) {
-  const { index, style } = props;
+  //console.log("Inside renderRow");
+  const { data,index, style } = props;
+ // console.log(index);
+  console.log(data.length);
   return (
+    
     <ListItem button style={style} key={index}>
-      <ListItemText primary={`Item ${index + 1}`} />
+      <ListItemText primary={data[index].taskName} />
     </ListItem>
+   
   );
 }
 
@@ -45,7 +54,7 @@ export default function VirtualizedList() {
   
   const loadTasks = () => {
     taskByUser({
-      userId: '5ec63cc670c16f5bc010cce0'
+      userId: jwt.user._id
     },{
         t :jwt.token
     })
@@ -53,19 +62,27 @@ export default function VirtualizedList() {
       if (data.error) {
         //this.setState({error: data.error})
       } else {
-        //console.log("Bochya inside loadSkills")
-        // const {check} = props;
+     
         check = JSON.parse(JSON.stringify(data));
-        // console.log(data)
+   
         // setTasks(JSON.parse(JSON.stringify(data)));
-        setTasks(data);
-        console.log("hi")
-        //  console.log(check);
-        //  console.log(check);
+        data.map(eachTask=>{
+          setTasks(tasks=>[...tasks,{
+            _id: eachTask._id,
+            taskName: eachTask.taskName,
+            priority: eachTask.priority,
+            status: eachTask.status,
+            difficulty : eachTask.difficulty,
+            labels: eachTask.labels
+          }]);
+        });
+        
+        
+      
       }
     })
   }
-
+  
   useEffect(() => {
     loadTasks();
    }, []);
@@ -81,7 +98,7 @@ export default function VirtualizedList() {
         
 
     <Grid container className={classes.root} spacing={2}>
-        <FixedSizeList height={400} width={300} itemSize={46} itemCount={200}>
+        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
             {renderRow}
         </FixedSizeList>
         <NewTask/>

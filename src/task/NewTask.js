@@ -63,7 +63,7 @@ export default function NewTask() {
     
 	
      create({
-        userId: '5ec63cc670c16f5bc010cce0'
+        userId: jwt.user._id
       },{
           t :jwt.token
       },task).then((data) => {
@@ -112,7 +112,7 @@ export default function NewTask() {
   return (
     <div className={classes.root}>
     <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-    Secondary
+    Add Task
   </Button>
   <Dialog
     open={open}

@@ -61,8 +61,7 @@ const remove = (params, credentials) => {
 }
 
 const taskByUser = (params,credentials) => {
-  console.log(params.userId);
-  console.log(credentials.t);
+  
   return fetch('http://localhost:5000/api/tasks/by/'+params.userId, {
     method: 'GET',
     headers: {
@@ -71,7 +70,6 @@ const taskByUser = (params,credentials) => {
         'Authorization': 'Bearer ' + credentials.t
       }
   }).then((response) => {
-    //console.log(response)
     return response.json()
   }).catch((err) => {
     console.log(err)
