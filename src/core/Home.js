@@ -65,7 +65,38 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ClippedDrawer() {
   const classes = useStyles();
-  const [spacing, setspacing] = useState(2)
+  const [spacing, setspacing] = useState(2);
+  const [all, setAll] = useState(false)
+  const [check, setCheck] = useState([0,1,2,3])
+
+  function handleClick(v) {
+    
+    if(v == 'All')
+    {
+      setCheck([0,1,2])
+      
+    }
+    if(v == 'Habits')
+    {
+      setCheck([0,1])
+      
+    }
+    if(v == 'Tasks')
+    {
+      setCheck([0])
+      
+    }
+    if(v == 'Rewards')
+    {
+      setCheck([])
+      
+    }
+    if(v == 'Dailies')
+    {
+      setCheck([0,1,2,3])
+      
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -82,9 +113,12 @@ export default function ClippedDrawer() {
         <div className={classes.drawerContainer}>
           <List>
             {['All', 'Habits', 'Dailies', 'Tasks','Rewards'].map((text, index) => (
-              <ListItem button key={text}>
+              <ListItem
+              onClick={()=>handleClick(text)}
+              button key={text}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText primary={text} />
+                
               </ListItem>
             ))}
           </List>
@@ -120,7 +154,7 @@ export default function ClippedDrawer() {
 
       <Grid className={classes.content} item xs={12}>
         <Grid container spacing={spacing}>
-          {[0, 1, 2,3].map((value) => (
+          {check.map((value) => (
             <Grid key={value} item>
               <All className={classes.paper} />
             </Grid>
