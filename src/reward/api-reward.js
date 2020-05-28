@@ -1,14 +1,14 @@
 import queryString from 'query-string'
-const create = (params, credentials, task) => {
-  console.log("Inside api-task create")
-  return fetch('http://localhost:5000/api/tasks/by/'+ params.userId, {
+const create = (params, credentials, reward) => {
+  console.log("Inside api-reward create")
+  return fetch('http://localhost:5000/api/rewards/by/'+ params.userId, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + credentials.t
       },
-      body: JSON.stringify(task)
+      body: JSON.stringify(reward)
     })
     .then((response) => {
       console.log(response);

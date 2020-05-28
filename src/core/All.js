@@ -7,12 +7,13 @@ import Grid from '@material-ui/core/Grid';
 import {taskByUser} from '../task/api-task';
 import auth from './../auth/auth-user-helper';
 import NewTask from '../task/NewTask';
-import EditTask from '../task/EditTask';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import { Link } from 'react-router-dom';
-
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuButton from './MenuButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,14 +32,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function renderRow(props) {
-  //console.log("Inside renderRow");
   const { data,index, style } = props;
- // console.log(index);
-  console.log(data.length);
   return (
     
     <ListItem button style={style} key={index}>
+      
       <ListItemText primary={data[index].taskName} />
+      <MenuButton item={data[index]}/>
     </ListItem>
    
   );
@@ -50,59 +50,78 @@ export default function VirtualizedList() {
   const classes = useStyles();
   const [spacing, setSpacing] = React.useState(2);
   const [tasks, setTasks] = useState([]);
+  const [habits,setHabits]=useState([]);
   let check; 
   
-  const loadTasks = () => {
-    taskByUser({
-      userId: jwt.user._id
-    },{
-        t :jwt.token
-    })
-    .then((data)=>{
-      if (data.error) {
-        //this.setState({error: data.error})
-      } else {
-     
-        check = JSON.parse(JSON.stringify(data));
-   
-        // setTasks(JSON.parse(JSON.stringify(data)));
-        data.map(eachTask=>{
-          setTasks(tasks=>[...tasks,{
-            _id: eachTask._id,
-            taskName: eachTask.taskName,
-            priority: eachTask.priority,
-            status: eachTask.status,
-            difficulty : eachTask.difficulty,
-            labels: eachTask.labels
-          }]);
-        });
-        
-        
-      
-      }
-    })
+  const loadTasks = (e) => {
+    if(e==='TBDD'){
+      taskByUser({
+        userId: jwt.user._id
+      },{
+          t :jwt.token
+      })
+      .then((data)=>{
+        if (data.error) {
+  
+        } else {
+          check = JSON.parse(JSON.stringify(data));
+          data.map(eachTask=>{
+            setTasks(tasks=>[...tasks,{
+              _id: eachTask._id,
+              taskName: eachTask.taskName,
+              priority: eachTask.priority,
+              status: eachTask.status,
+              difficulty : eachTask.difficulty,
+              labels: eachTask.labels
+            }]);
+          });
+        }
+      })
+    }
+    
+    
   }
   
   useEffect(() => {
     loadTasks();
    }, []);
  
-  
+   
+
    
   const handleChange = (event) => {
     setSpacing(Number(event.target.value));
   }
 
   return (
-     
-        
 
-    <Grid container className={classes.root} spacing={2}>
+    <Grid container item xs={12} direction='row' spacing={10}>
+    <Grid item xs={3} justify="center" spacing={2}>
+        <IconButton onClick={loadTasks('TBDD')}>Sort by Due Date</IconButton>
+
         <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
             {renderRow}
         </FixedSizeList>
         <NewTask/>
-
+    </Grid>
+    <Grid item xs={3} justify="center" spacing={2}>
+        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
+            {renderRow}
+        </FixedSizeList>
+        <NewTask/>
+    </Grid>
+    <Grid item xs={3} justify="center" spacing={2}>
+        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
+            {renderRow}
+        </FixedSizeList>
+        <NewTask/>
+    </Grid>
+    <Grid item xs={3} justify="center" spacing={2}>
+        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
+            {renderRow}
+        </FixedSizeList>
+        <NewTask/>
+    </Grid>
       
     </Grid>
         
