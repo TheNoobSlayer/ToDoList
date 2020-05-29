@@ -80,14 +80,15 @@ const taskByUser = (params,credentials) => {
   })
 }
 
-const taskByLabel = (params,credentials) => {
-    return fetch('/api/tasks/by/labels'+params.userId, {
-      method: 'GET',
+const taskByLabel = (params,credentials,task) => {
+    return fetch('http://localhost:5000/api/tasks/by/labels/'+params.userId, {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + credentials.t
-      }
+      },
+      body: JSON.stringify(task)
     }).then((response) => {
       return response.json()
     }).catch((err) => {
@@ -95,15 +96,18 @@ const taskByLabel = (params,credentials) => {
     })
   }
 
-  const taskByPriority = (params,credentials) => {
-    return fetch('/api/tasks/by/priority'+params.userId, {
-      method: 'GET',
+  const taskByPriority = (params,credentials,task) => {
+    console.log("Bochya inside taskByPriority")
+    return fetch('http://localhost:5000/api/tasks/by/priority/'+params.userId, {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + credentials.t
-      }
+      },
+      body: JSON.stringify(task)
     }).then((response) => {
+      console.log(response);
       return response.json()
     }).catch((err) => {
       console.log(err)
@@ -111,7 +115,7 @@ const taskByLabel = (params,credentials) => {
   }
 
   const taskByDueDate = (params,credentials) => {
-    return fetch('/api/tasks/by/dueDate'+params.userId, {
+    return fetch('http://localhost:5000/api/tasks/by/dueDate/'+params.userId, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -125,14 +129,15 @@ const taskByLabel = (params,credentials) => {
     })
   }
 
-  const taskByStatus = (params,credentials) => {
-    return fetch('/api/tasks/by/status'+params.userId, {
-      method: 'GET',
+  const taskByStatus = (params,credentials,task) => {
+    return fetch('http://localhost:5000/api/tasks/by/status/'+params.userId, {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + credentials.t
-      }
+      },
+      body: JSON.stringify(task)
     }).then((response) => {
       return response.json()
     }).catch((err) => {

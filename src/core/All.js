@@ -5,6 +5,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { FixedSizeList } from 'react-window';
 import Grid from '@material-ui/core/Grid';
 import {taskByUser} from '../task/api-task';
+import {taskByDueDate} from '../task/api-task';
+import {taskByPriority} from '../task/api-task';
+import {taskByStatus} from '../task/api-task';
+import {taskByLabel} from '../task/api-task';
 import auth from './../auth/auth-user-helper';
 import NewTask from '../task/NewTask';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -49,12 +53,17 @@ export default function VirtualizedList() {
   const jwt = auth.isAuthenticated()
   const classes = useStyles();
   const [spacing, setSpacing] = React.useState(2);
+  const [sortBy,setSortBy] = React.useState('None');
   const [tasks, setTasks] = useState([]);
   const [habits,setHabits]=useState([]);
   let check; 
   
-  const loadTasks = (e) => {
-    if(e==='TBDD'){
+  const handleSort = (event) => {
+    setSortBy(event);
+  }
+
+  const loadTasks = () => {
+    if(sortBy=='None'){
       taskByUser({
         userId: jwt.user._id
       },{
@@ -78,10 +87,118 @@ export default function VirtualizedList() {
         }
       })
     }
+    else if(sortBy=='TBDD'){
+      taskByDueDate({
+        userId: jwt.user._id
+      },{
+          t :jwt.token
+      })
+      .then((data)=>{
+        if (data.error) {
+  
+        } else {
+          check = JSON.parse(JSON.stringify(data));
+          data.map(eachTask=>{
+            setTasks(tasks=>[...tasks,{
+              _id: eachTask._id,
+              taskName: eachTask.taskName,
+              priority: eachTask.priority,
+              status: eachTask.status,
+              difficulty : eachTask.difficulty,
+              labels: eachTask.labels
+            }]);
+          });
+        }
+      })
+    }
+    else if(sortBy=='TBP'){
+      taskByPriority({
+        userId: jwt.user._id
+      },{
+          t :jwt.token
+      },{
+        priority:'Medium'
+      })
+      .then((data)=>{
+        if (data.error) {
+  
+        } else {
+          console.log("Bochya inside TBP");
+          console.log(data);
+          check = JSON.parse(JSON.stringify(data));
+          data.map(eachTask=>{
+            setTasks(tasks=>[...tasks,{
+              _id: eachTask._id,
+              taskName: eachTask.taskName,
+              priority: eachTask.priority,
+              status: eachTask.status,
+              difficulty : eachTask.difficulty,
+              labels: eachTask.labels
+            }]);
+          });
+        }
+      })
+    }
+    else if(sortBy=='TBS'){
+      taskByStatus({
+        userId: jwt.user._id
+      },{
+          t :jwt.token
+      },{
+        status:'In Progress'
+      })
+      .then((data)=>{
+        if (data.error) {
+  
+        } else {
+          console.log("Bochya inside TBS");
+          console.log(data);
+          check = JSON.parse(JSON.stringify(data));
+          data.map(eachTask=>{
+            setTasks(tasks=>[...tasks,{
+              _id: eachTask._id,
+              taskName: eachTask.taskName,
+              priority: eachTask.priority,
+              status: eachTask.status,
+              difficulty : eachTask.difficulty,
+              labels: eachTask.labels
+            }]);
+          });
+        }
+      })
+    }
+    else if(sortBy=='TBL'){
+      taskByLabel({
+        userId: jwt.user._id
+      },{
+          t :jwt.token
+      },{
+        labels:'Personal'
+      })
+      .then((data)=>{
+        if (data.error) {
+  
+        } else {
+          console.log("Bochya inside TBL");
+          console.log(data);
+          check = JSON.parse(JSON.stringify(data));
+          data.map(eachTask=>{
+            setTasks(tasks=>[...tasks,{
+              _id: eachTask._id,
+              taskName: eachTask.taskName,
+              priority: eachTask.priority,
+              status: eachTask.status,
+              difficulty : eachTask.difficulty,
+              labels: eachTask.labels
+            }]);
+          });
+        }
+      })
+    }
     
     
   }
-  
+  //console.log(sortBy);
   useEffect(() => {
     loadTasks();
    }, []);
@@ -94,11 +211,11 @@ export default function VirtualizedList() {
   }
 
   return (
-
+    
     <Grid container item xs={12} direction='row' spacing={10}>
     <Grid item xs={3} justify="center" spacing={2}>
-        <IconButton onClick={loadTasks('TBDD')}>Sort by Due Date</IconButton>
-
+        
+        
         <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
             {renderRow}
         </FixedSizeList>

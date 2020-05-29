@@ -103,8 +103,9 @@ const create = (req, res, next) => {
 
   const taskByPriority = (req, res) => {
     //console.log("Inside listByLabels")
-    console.log(req.task);
-    console.log(req.body.labels);
+    console.log("Bo inside taskbyPriority");
+    console.log(req);
+    console.log(req.body.priority);
     Task.find({priority: req.body.priority}).limit(5).populate('user', '_id name').exec((err, tasks) => {
       if (err) {
         return res.status(400).json({
