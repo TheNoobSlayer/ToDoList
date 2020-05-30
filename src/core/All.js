@@ -40,8 +40,10 @@ function renderRow(props) {
   return (
     
     <ListItem button style={style} key={index}>
-      
+      <MenuButton item={data[index]}/>
+
       <ListItemText primary={data[index].taskName} />
+      <MenuButton item={data[index]}/>
       <MenuButton item={data[index]}/>
     </ListItem>
    

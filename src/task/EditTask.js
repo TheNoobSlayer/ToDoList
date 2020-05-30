@@ -77,6 +77,7 @@ export default function NewTask(props) {
        if (data.error) {
          setError(data.error)
        } else {
+         window.location.reload();
          setError('')
          setOpen(false)
        }

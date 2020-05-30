@@ -65,7 +65,7 @@ export default function DeleteTask(props) {
        if (data.error) {
          setError(data.error)
        } else {
-         auth.signout(() => console.log('deleted'))
+         window.location.reload();
          setError('')
          setOpen(false)
        }
