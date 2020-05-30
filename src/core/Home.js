@@ -12,10 +12,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import MyTasks from '../task/MyTasks';
+//import MyTasks from '../task/MyTasks';
 import { FixedSizeList } from 'react-window';
 import All from './All';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TabPanel from '@material-ui/lab/TabPanel';
+import TabContext from '@material-ui/lab/TabContext';
 
 
 const drawerWidth = 240;
@@ -67,36 +70,25 @@ export default function ClippedDrawer() {
   const classes = useStyles();
   const [spacing, setspacing] = useState(2);
   const [all, setAll] = useState(false)
-  const [check, setCheck] = useState([0,1,2,3])
+  const [check, setCheck] = useState([0,1,2,3]);
+  const [tab, settab] = React.useState("All");
 
-  function handleClick(v) {
-    
-    if(v == 'All')
-    {
-      setCheck([0,1,2])
-      
-    }
-    if(v == 'Habits')
-    {
-      setCheck([0,1])
-      
-    }
-    if(v == 'Tasks')
-    {
-      setCheck([0])
-      
-    }
-    if(v == 'Rewards')
-    {
-      setCheck([])
-      
-    }
-    if(v == 'Dailies')
-    {
-      setCheck([0,1,2,3])
-      
-    }
-  }
+  const tabToAll = () => {
+
+    settab("All");
+  };
+  const tabToTasks = () => {
+
+    settab("Tasks");
+  };
+  const tabToDailies = () => {
+
+    settab("Dailies");
+  };
+  const tabToRewards = () => {
+
+    settab("Rewards");
+  };
 
   return (
     <div className={classes.root}>
@@ -111,56 +103,50 @@ export default function ClippedDrawer() {
       >
         <Toolbar />
         <div className={classes.drawerContainer}>
-          <List>
-            {['All', 'Habits', 'Dailies', 'Tasks','Rewards'].map((text, index) => (
-              <ListItem
-              onClick={()=>handleClick(text)}
-              button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-                
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      </Drawer>
-      {/* <main className={classes.content}>
-      
-        <All/>
-        
-        
-      </main>
-      <main className={classes.content2}>
-      
-        <All/>
-        
-        
-      </main>
-      <main className={classes.content3}>
-      
-        <All/>
-      
-      
-      </main> */}
+        <List>
+            
+          <ListItem key="All">
+            <Button fullWidth onClick={tabToAll}>All</Button>
+          </ListItem>
+          <ListItem key="Habits">  
+            <Button fullWidth onClick={tabToTasks}>Tasks</Button>
+          </ListItem>
+          <ListItem button key="Dailies">
+            <ListItemIcon><InboxIcon/></ListItemIcon>
+            <ListItemText primary="Dailies"/>
+          </ListItem>
+          <ListItem button key="Rewards">
+            <ListItemIcon><InboxIcon/></ListItemIcon>
+            <ListItemText primary="Rewards"/>
+          </ListItem>
+      </List>
+      <Divider />
+      <List>
 
-      <Grid className={classes.content} item xs={12}>
-        <Grid container spacing={spacing}>
-          {check.map((value) => (
-            <Grid key={value} item>
-              <All className={classes.paper} />
-            </Grid>
-          ))}
-        </Grid>
-      </Grid>
+      </List>
+      </div>
+      </Drawer>      
+      <main className={classes.content}>
+      <Toolbar />
+        <TabContext value={tab}>
+          <TabPanel value="All">
+            <All/>
+          </TabPanel>
+          <TabPanel value="Tasks">
+            <div>Boooooooo</div>
+          </TabPanel>
+          <TabPanel value="Dailies">
+            <All/>
+          </TabPanel>
+          <TabPanel value="Habits">
+            <All/>
+          </TabPanel>
+          <TabPanel value="Rewards">
+            <All/>
+          </TabPanel>
+        </TabContext>
+      
+      </main>
     </div>
   );
 }

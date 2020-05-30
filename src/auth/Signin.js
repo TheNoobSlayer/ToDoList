@@ -74,7 +74,7 @@ export default function SignInSide() {
   const cache = {};
    const {from} =  {
       from: {
-        pathname: '/'
+        pathname: '/home'
       }
     }
    

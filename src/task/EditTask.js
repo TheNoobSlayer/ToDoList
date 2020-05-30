@@ -14,8 +14,13 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import {create} from './api-task';
+import EditIcon from '@material-ui/icons/Edit';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import IconButton from '@material-ui/core/IconButton';
+
+import {update} from './api-task';
 import auth from './../auth/auth-user-helper';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +39,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-export default function NewTask() {
+export default function NewTask(props) {
+  
   const jwt = auth.isAuthenticated();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -62,14 +68,16 @@ export default function NewTask() {
    console.log();
     
 	
-     create({
-        userId: jwt.user._id
+     update({
+        userId: jwt.user._id,
+        taskId: props.item._id
       },{
           t :jwt.token
       },task).then((data) => {
        if (data.error) {
          setError(data.error)
        } else {
+         window.location.reload();
          setError('')
          setOpen(false)
        }
@@ -111,9 +119,9 @@ export default function NewTask() {
 
   return (
     <div className={classes.root}>
-    <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-    Add Task
-  </Button>
+    <IconButton fullWidth='true' size="large" color="inherit" onClick={handleClickOpen}>
+      <EditIcon/>
+    </IconButton>
   <Dialog
     open={open}
     TransitionComponent={Transition}
@@ -122,7 +130,7 @@ export default function NewTask() {
     aria-labelledby="alert-dialog-slide-title"
     aria-describedby="alert-dialog-slide-description"
   >
-    <DialogTitle id="alert-dialog-slide-title">{"Add a New Task"}</DialogTitle>
+    <DialogTitle id="alert-dialog-slide-title">{"Edit This Task"}</DialogTitle>
       <form classes={classes.form}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
@@ -200,7 +208,7 @@ export default function NewTask() {
         Cancel
       </Button>
       <Button onClick={handleAdd} color="primary">
-        Add
+        Edit
       </Button>
     </DialogActions>
   </Dialog>

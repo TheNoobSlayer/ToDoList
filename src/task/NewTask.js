@@ -70,6 +70,7 @@ export default function NewTask() {
        if (data.error) {
          setError(data.error)
        } else {
+        window.location.reload();
          setError('')
          setOpen(false)
        }
