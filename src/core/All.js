@@ -10,6 +10,7 @@ import {taskByPriority} from '../task/api-task';
 import {taskByStatus} from '../task/api-task';
 import {taskByLabel} from '../task/api-task';
 import auth from './../auth/auth-user-helper';
+import {remove} from '../task/api-task';
 import NewTask from '../task/NewTask';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -18,6 +19,11 @@ import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuButton from './MenuButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Checkbox from '@material-ui/core/Checkbox';
+import Card from '@material-ui/core/Card';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,15 +45,30 @@ function renderRow(props) {
   const { data,index, style } = props;
   return (
     
-    <ListItem button style={style} key={index}>
-      <MenuButton item={data[index]}/>
-
+    <ListItem button divider style={style} key={index}>
+      
       <ListItemText primary={data[index].taskName} />
-      <MenuButton item={data[index]}/>
-      <MenuButton item={data[index]}/>
+      
     </ListItem>
    
   );
+}
+
+function completeTask(props){
+  const jwt = auth.isAuthenticated();
+
+  remove({
+    userId: jwt.user._id,
+    taskId: props
+  },{
+      t :jwt.token
+  }).then((data) => {
+   if (data.error) {
+   } else {
+     window.location.reload();
+     
+   }
+ });
 }
 
 
@@ -58,8 +79,16 @@ export default function VirtualizedList() {
   const [sortBy,setSortBy] = React.useState('None');
   const [tasks, setTasks] = useState([]);
   const [habits,setHabits]=useState([]);
+  const [checked, setChecked] = React.useState(false);
+
   let check; 
   
+
+  const handleChange = (event) => {
+    console.log("Inside handle change")
+   
+  };
+
   const handleSort = (event) => {
     setSortBy(event);
   }
@@ -76,6 +105,7 @@ export default function VirtualizedList() {
   
         } else {
           check = JSON.parse(JSON.stringify(data));
+          console.log(data);
           data.map(eachTask=>{
             setTasks(tasks=>[...tasks,{
               _id: eachTask._id,
@@ -208,9 +238,7 @@ export default function VirtualizedList() {
    
 
    
-  const handleChange = (event) => {
-    setSpacing(Number(event.target.value));
-  }
+  
 
   return (
     
@@ -218,28 +246,73 @@ export default function VirtualizedList() {
     <Grid item xs={3} justify="center" spacing={2}>
         
         
-        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
-            {renderRow}
-        </FixedSizeList>
-        <NewTask/>
+    <List className={classes.root}>
+    {tasks.map((value,index) => {
+      
+
+      return (
+        <ListItem button divider key={index}>
+      
+          <ListItemText primary={value.taskName} />
+         
+        </ListItem>
+      );
+    })}
+      <NewTask/>
+    </List>
+   
+        
     </Grid>
     <Grid item xs={3} justify="center" spacing={2}>
-        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
-            {renderRow}
-        </FixedSizeList>
-        <NewTask/>
+    <List className={classes.root}>
+    {tasks.map((value,index) => {
+      
+
+      return (
+        <ListItem button divider key={index}>
+          <IconButton onClick={completeTask(value._id)}>
+            <CheckBoxOutlineBlankIcon/>
+          </IconButton>
+          <ListItemText primary={value.taskName} />
+          <MenuButton/>
+          
+        </ListItem>
+      );
+    })}
+      <NewTask/>
+    </List>
     </Grid>
     <Grid item xs={3} justify="center" spacing={2}>
-        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
-            {renderRow}
-        </FixedSizeList>
-        <NewTask/>
+    <List className={classes.root}>
+    {tasks.map((value,index) => {
+      
+
+      return (
+        <ListItem button divider key={index}>
+      
+          <ListItemText primary={value.taskName} />
+          
+        </ListItem>
+      );
+    })}
+      <NewTask/>
+    </List>
     </Grid>
     <Grid item xs={3} justify="center" spacing={2}>
-        <FixedSizeList height={400} width={300} itemSize={46} itemCount={tasks.length} itemData={tasks}>
-            {renderRow}
-        </FixedSizeList>
-        <NewTask/>
+    <List className={classes.root}>
+    {tasks.map((value,index) => {
+      
+
+      return (
+        <ListItem button divider key={index}>
+      
+          <ListItemText primary={value.taskName} />
+         
+        </ListItem>
+      );
+    })}
+      <NewTask/>
+    </List>
     </Grid>
       
     </Grid>
