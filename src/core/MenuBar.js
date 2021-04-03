@@ -99,7 +99,7 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
-  withRouter(({history}) => { 
+  // withRouter(({history}) => { 
     return (
         <div className={classes.root}>
         <CssBaseline />
@@ -122,16 +122,14 @@ export default function PersistentDrawerLeft() {
             <Typography variant="h6" noWrap>
                 Persistent drawer
             </Typography>
-            !auth.isAuthenticated() && (<span>
+            <span>
             <Link to="/signup">
-                <Button style={isActive(history, "/signup")}>Sign up
-                </Button>
+                <Button>Sign up</Button>
             </Link>
             <Link to="/signin">
-                <Button style={isActive(history, "/signin")}>Sign In
-                </Button>
+                <Button>Sign In</Button>
             </Link>
-            </span>)
+            </span>
             </Toolbar>
         </AppBar>
         <Drawer
@@ -199,6 +197,5 @@ export default function PersistentDrawerLeft() {
         </main>
         </div>
     );
-  }
-  )
+  // })
 }
