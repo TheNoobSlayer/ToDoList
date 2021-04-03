@@ -9,16 +9,16 @@ router.route('/api/tasks/by/:userId')
   .post(authCtrl.requireSignin,taskCtrl.create) 
 
 router.route('/api/tasks/by/labels/:userId/')
-  .post(authCtrl.requireSignin,taskCtrl.taskByLabels)
+  .get(authCtrl.requireSignin,taskCtrl.taskByLabels)
 
 router.route('/api/tasks/by/priority/:userId/')
-  .post(authCtrl.requireSignin,taskCtrl.taskByPriority)
+  .get(authCtrl.requireSignin,taskCtrl.taskByPriority)
 
 router.route('/api/tasks/by/dueDate/:userId/')
   .get(authCtrl.requireSignin,taskCtrl.taskByDueDate)
   
 router.route('/api/tasks/by/status/:userId/')
- .post(authCtrl.requireSignin,taskCtrl.taskByStatus)
+  .get(authCtrl.requireSignin,taskCtrl.taskByStatus)
 
 router.route('/api/tasks/:userId/:taskId')
   .get(authCtrl.requireSignin,taskCtrl.read)

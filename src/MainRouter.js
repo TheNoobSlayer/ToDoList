@@ -21,7 +21,7 @@ function MainRouter() {
         <PrivateRoute path="/home" component={Home}/>
 
         </Switch>
-        <Footer/>
+       
      </div>
   
     );

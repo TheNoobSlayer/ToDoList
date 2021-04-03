@@ -84,7 +84,7 @@ export default function DeleteTask(props) {
 
   return (
     <div className={classes.root}>
-    <IconButton fullWidth='true' size="large" color="inherit" onClick={handleDelete}>
+    <IconButton fullWidth='false' size="small" color="inherit" onClick={handleDelete}>
       <DeleteIcon/>
     </IconButton>
   

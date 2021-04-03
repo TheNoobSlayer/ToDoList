@@ -119,7 +119,7 @@ export default function NewTask(props) {
 
   return (
     <div className={classes.root}>
-    <IconButton fullWidth='true' size="large" color="inherit" onClick={handleClickOpen}>
+    <IconButton fullWidth='false' size="small" color="inherit" onClick={handleClickOpen}>
       <EditIcon/>
     </IconButton>
   <Dialog
