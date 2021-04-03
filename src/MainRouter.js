@@ -5,6 +5,7 @@ import Signup from './user/SignUp';
 import Signin from './auth/Signin';
 import Footer from './core/Footer';
 import Home from './core/Home';
+import Dashboard from './core/Dashboard'
 import PrivateRoute from './auth/PrivateRoute'
 
 
@@ -19,8 +20,10 @@ function MainRouter() {
         <Route path="/signup" component={Signup}/>
         <Route path="/signin" component={Signin}/>
         <PrivateRoute path="/home" component={Home}/>
+        <PrivateRoute path="/dashboard" component={Dashboard}/>
 
         </Switch>
+        <Footer/>
        
      </div>
   
